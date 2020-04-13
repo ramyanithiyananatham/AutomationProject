@@ -1,0 +1,114 @@
+ The path to driver executable must be set by webdriver.gecko.driver system property:
+Firefox Not Connected Exception:--->update the selenium jar file and gecko driver to the latest version 
+ Session Not Created Exception:--->compatibility issues between Selenium and Gecko driver
+ Connection Refused Exception:-->driver.quit();Clean the browser cache;Clean the project workspace within Eclipse IDE; use Latest version 
+
+
+Using XPath Handling complex & Dynamic elements in Selenium
+1) Basic XPath: Xpath=//tagname[@attribute='value']
+absolute- any changes made in the path of the element then that XPath gets failed.
+relative- it starts from the middle of the HTML DOM structure.it can search the element anywhere at the webpage.
+2) Contains():It is used when the value of any attribute changes dynamically. example for btnLogin,btnReset
+Xpath=//*[contains(@name,'btn')]
+3) Using OR & AND:  
+Xpath=//*[@type='submit' or @name='btnReset']
+4)Starts-with function:
+Xpath=//label[starts-with(@id,'message')]
+5) Text():Xpath=//td[text()='UserID']	
+6) XPath axes methods:
+Xpath=//*[@type='text']//following::input--------------select all elements under the current node
+Xpath=//*[text()='Enterprise Testing']//ancestor::div
+Xpath=//*[@id='java_technologies']//child::li
+Xpath=//*[@type='submit']//preceding::input
+ xpath=//*[@type='submit']//following-sibling::input
+ Selects the parent of the current node as shown in the below screen.
+ Xpath =//*[@type='password']//self::input
+ Xpath=//*[@id='rt-feature']//descendant::a
+ 
+ 
+ dropdownvalue
+ Select select = new Select(dropDown);
+		boolean ismultiple=select.isMultiple();
+		select.selectByIndex(2);
+		select.selectByVisibleText("ANTARCTICA");
+		select.selectByValue("AUD");
+		select.getAllSelectedOptions(); for selecting all selected values
+	    System.out.println("Current selected Value " + select.getFirstSelectedOption().getText());//first or current selected item
+		List<WebElement> alloptions = select.getOptions();// getOptions();
+		
+custom Dropdown--> no select tag--->use finfElement().sendKeys();
+
+DropdownMenu-->menus with hidden dropdown shown only during mouseover
+        Actions builder = new Actions(driver);
+		Action mouseOverHome = builder.moveToElement(MenuWebElement).perform();
+
+Keyboard actions -->keyDown(txtUsername, Keys.SHIFT).sendKeys(txtUsername, "hello").keyUp(txtUsername, Keys.SHIFT).doubleClick(txtUsername).contextClick().build();clickAndHold(),contextClick(), doubleClick(), dragAndDrop(source, target), dragAndDropBy(source, x-offset, y-offset), moveByOffset(x-offset, y-offset), moveToElement(toElement), release(), sendKeys(onElement, charsequence)
+		
+		
+findElements()-->	List<WebElement> linkElements = driver.findElements(By.tagName("a")); to handle multiple element
+
+Scrollbar--->
+JavascriptExecutor je = (JavascriptExecutor) driver;
+je.executeScript("arguments[0].scrollIntoView(true);",webelement);
+
+AlertAndConfirmationPopup---cant inspect, colourless, but move
+     Alert alert = driver.switchTo().alert();	 // Switching to Alert 
+	 alert.getText(); alert.accept();alert.dismiss();
+	 
+	 
+notification&information popup/ browser popup.---> it arrises near browserbar. so controlled by browser settings----cant inspect, cant move
+
+		//Create prefs map to store all preferences 
+		Map<String, Object> prefs = new HashMap<String, Object>();
+		//Put this into prefs map to switch off browser notification
+		prefs.put("profile.default_content_setting_values.notifications", 2);//notification popup
+		
+		//Create chrome options to set this prefs
+		ChromeOptions options = new ChromeOptions();
+		options.setExperimentalOption("prefs", prefs);
+options.addArguments("--disable-extensions");//information Popup
+		WebDriver driver=new ChromeDriver(options);     
+	        
+
+FirefoxOptions options = new FirefoxOptions();
+options.setProfile(new FirefoxProfile());
+options.addPreference("dom.webnotifications.enabled", false);
+WebDriver driver = new FirefoxDriver(options);
+
+
+Page on load popup
+driver.get(http://admin:password@192.168.1.11)
+
+Hidden division popup---can inspect, colourful, cant move --->like notification when delete
+findElement()
+
+File Upload--->findElement().sendKeys("c:/hj");
+File Download Pop up
+Map<String, Object> prefsMap = new HashMap<String, Object>();
+		prefsMap.put("profile.default_content_settings.popups", 0);// used to handle the download notification bar
+		prefsMap.put("download.default_directory", "C:\\chrome");// desired path of our downloaded file
+
+		ChromeOptions option = new ChromeOptions();
+		option.setExperimentalOption("prefs", prefsMap);
+		option.addArguments("--test-type");
+		option.addArguments("--disable-extensions");
+
+
+Child Browser popup---->driver.switchTo().window(String);getWindowHandles();parenWH=first iterator<String>.next();
+
+Others:
+Robot class provides control over the mouse and keyboard devices.
+we have to import java.awt.Robot; and add Throws AWT Exception
+dis adv of Robot:
+It doesnt allow implicit wait, Synchronisation is a major challenge
+If focus is not available we cant use Robot class
+Keyword/mouse event will only works on current instance of Window. E.g. suppose a code is performing any robot class event, and during the code execution user has moved to some other screen then keyword/mouse event will occur on that screen.
+Most of the methods like mouseMove is screen resolution dependent so there might be a chance that code working on one machine might not work on other.
+
+Autoit
+ it is used for Desktop Automation rather Web Automation, used to handle window based popup. 
+ It is a powerful tool and it just not automate desktop windows, button & form, it automates mouse movements & keystrokes too.
+ 
+ 
+ 
+ 
